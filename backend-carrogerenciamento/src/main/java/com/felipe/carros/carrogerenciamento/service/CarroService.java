@@ -14,16 +14,14 @@ public class CarroService {
     public CarroService(CarroRepository carroRepository){
         this.carroRepository = carroRepository;
     }
-
-
-
+    
     public Carro save(Carro carro){
         return carroRepository.save(carro);
     }
 
     public Carro update(long id, Carro carro){
         if(!carroRepository.existsById(id)){
-            throw new RuntimeException("Carro com id: " + id + " Não encontrado!");
+            throw new RuntimeException("Carro com id: " + id + " não encontrado!");
         }
         carro.setId(id);
         return carroRepository.save(carro);

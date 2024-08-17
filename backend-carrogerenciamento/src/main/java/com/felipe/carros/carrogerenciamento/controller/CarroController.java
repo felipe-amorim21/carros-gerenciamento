@@ -29,7 +29,7 @@ public class CarroController {
         return new ResponseEntity<>(carroService.update(id, carro), HttpStatus.OK);
     }
 
-    @GetMapping("/listAll")
+    @GetMapping("/findAll")
     public ResponseEntity<List<Carro>> findAll(){
         return new ResponseEntity<>(carroService.findAll(), HttpStatus.OK);
     }
