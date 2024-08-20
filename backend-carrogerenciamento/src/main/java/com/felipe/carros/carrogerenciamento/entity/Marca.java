@@ -1,5 +1,7 @@
 package com.felipe.carros.carrogerenciamento.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +23,6 @@ public class Marca {
     private long id;
     private String nome;
     @OneToMany(mappedBy = "marca")
+    @JsonIgnore
     private List<Carro> carros;
 }
