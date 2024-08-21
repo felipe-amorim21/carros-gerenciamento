@@ -1,6 +1,7 @@
 package com.felipe.carros.carrogerenciamento.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ public class Marca {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String nome;
-    @OneToMany(mappedBy = "marca")
-    @JsonIgnore
+    @OneToMany(mappedBy = "marca", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("marca")
     private List<Carro> carros;
 }

@@ -2,6 +2,7 @@ package com.felipe.carros.carrogerenciamento.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +23,8 @@ public class Carro {
     private long id;
 
     private String nome;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("carros")
     private Marca marca;
     @ManyToMany
     @JoinTable(name = "carro_acessorio")

@@ -1,1 +1,8 @@
-<p>marcaslist works!</p>
+<div class="marca-list">
+  <div *ngFor="let marca of marcas" class="marca-card">
+    <h2 class="marca-title">{{ marca.nome }}</h2>
+    <ul class="car-list">
+      <li *ngFor="let carro of marca.carros" class="car-item">{{ carro.nome }}</li>
+    </ul>
+  </div>
+</div>

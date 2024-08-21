@@ -1,0 +1,49 @@
+/* Container que agrupa todos os cards */
+.marca-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; /* Espaço entre os cards */
+  justify-content: center; /* Alinha os cards ao centro */
+  padding: 16px;
+}
+
+/* Estilo de cada card */
+.marca-card {
+  background-color: #fff; /* Cor de fundo branca para o card */
+  border: 1px solid #ddd; /* Borda leve ao redor do card */
+  border-radius: 12px; /* Bordas arredondadas */
+  padding: 20px; /* Espaçamento interno maior */
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra mais pronunciada */
+  transition: transform 0.3s, box-shadow 0.3s; /* Transição suave para hover */
+}
+
+/* Estilo do título da marca */
+.marca-title {
+  text-align: center;
+  margin: 0; /* Remove margem padrão */
+  font-size: 1.5rem; /* Tamanho da fonte maior */
+  color: #333; /* Cor escura para o texto */
+  border-bottom: 2px solid #007bff; /* Linha abaixo do título */
+  padding-bottom: 8px; /* Espaço abaixo do título */
+}
+
+/* Estilo da lista de carros */
+.car-list {
+  list-style: none; /* Remove os pontos da lista */
+  padding: 0;
+  margin: 0;
+}
+
+/* Estilo de cada item da lista de carros */
+.car-item {
+  margin: 8px 0; /* Espaçamento entre os itens */
+  font-size: 1rem; /* Tamanho da fonte dos itens */
+  color: #555; /* Cor dos itens da lista */
+}
+
+/* Estilo para quando o mouse passa sobre o card */
+.marca-card:hover {
+  transform: translateY(-5px); /* Move o card para cima */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+}
