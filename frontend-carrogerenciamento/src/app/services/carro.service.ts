@@ -22,7 +22,7 @@ export class CarroService {
   }
 
   deleteById(id: number): Observable<void> {
-    return this.http.delete<void>(this.API + '/deleteById' + id);
+    return this.http.delete<void>(this.API + '/deleteById/' + id);
   }
 
   save(carro: Carro): Observable<Carro> {
