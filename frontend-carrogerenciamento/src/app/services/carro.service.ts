@@ -18,7 +18,7 @@ export class CarroService {
   }
 
   findById(id: number): Observable<Carro> {
-    return this.http.get<Carro>(this.API + '/findById' + id);
+    return this.http.get<Carro>(this.API + '/findById/' + id);
   }
 
   deleteById(id: number): Observable<void> {
@@ -30,6 +30,6 @@ export class CarroService {
   }
 
   update(carro: Carro, id: number): Observable<Carro> {
-    return this.http.put<Carro>(this.API + '/update' + id, carro);
+    return this.http.put<Carro>(this.API + '/update/' + id, carro);
   }
 }

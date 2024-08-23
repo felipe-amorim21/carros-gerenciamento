@@ -3,6 +3,7 @@ import { CarroService } from '../../../services/carro.service';
 import { Carro } from '../../../models/carro';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-carroslist',
@@ -12,15 +13,11 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './carroslist.component.scss',
 })
 export class CarroslistComponent implements OnInit {
-  adicionarCarro(_t57: any) {
-    throw new Error('Method not implemented.');
-  }
-
   @Input() carros: Carro[] = [];
   // carroService = Inject(CarroService);
   displayedColumns: string[] = ['id', 'nome', 'marca', 'acessorio', 'acoes'];
 
-  constructor(private carroService: CarroService) {}
+  constructor(private carroService: CarroService, private router: Router) {}
 
   ngOnInit(): void {
     this.findAll();
@@ -37,15 +34,19 @@ export class CarroslistComponent implements OnInit {
     });
   }
 
+  editarCarro(carro: Carro) {
+    this.router.navigate([`/admin/carros/edit/${carro.id}`]);
+  }
+
   findAll() {
     this.carroService.findAll().subscribe({
       next: (carros: Carro[]) => {
         console.log('Carros recebidos:', carros);
         this.carros = carros;
       },
-      error: (error: any) => {
+      error: (err: any) => {
+        console.log(err);
         alert('Ocorreu um erro ao renderizar carroList');
-        console.log(error);
       },
     });
   }

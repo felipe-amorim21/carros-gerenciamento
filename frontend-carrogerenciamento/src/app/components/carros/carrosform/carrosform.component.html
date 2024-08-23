@@ -1,1 +1,17 @@
-<p>carrosform works!</p>
+<form (ngSubmit)="onSubmit()" #carForm="ngForm">
+  <mat-form-field>
+    <mat-label>Nome do Carro</mat-label>
+    <input matInput [(ngModel)]="carro.nome" name="nome" required />
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Marca do Carro</mat-label>
+    <mat-select [(ngModel)]="marcaSelecionada.nome" name="marca" required>
+      <mat-option *ngFor="let marca of marcas" [value]="marca.nome">
+        {{ marca.nome }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button type="submit">Salvar</button>
+</form>
