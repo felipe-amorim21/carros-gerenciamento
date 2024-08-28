@@ -1,7 +1,7 @@
 import {
   ChangeDetectionStrategy,
-  ChangeDetectorRef,
   Component,
+  Inject,
   Input,
   OnInit,
 } from '@angular/core';
@@ -13,8 +13,9 @@ import { MarcaService } from '../../../services/marca.service';
 import { Marca } from '../../../models/marca';
 import { FormsModule } from '@angular/forms';
 import { Carro } from '../../../models/carro';
-import { ActivatedRoute } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { ActivatedRoute, Route, Router } from '@angular/router';
+import { NgFor, NgIf } from '@angular/common';
+import { state } from '@angular/animations';
 
 @Component({
   selector: 'app-carrosform',
@@ -25,64 +26,60 @@ import { NgFor } from '@angular/common';
     MatSelectModule,
     FormsModule,
     NgFor,
+    NgIf,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.Default,
   templateUrl: './carrosform.component.html',
   styleUrl: './carrosform.component.scss',
 })
-export class CarrosformComponent implements OnInit {
+export class CarrosformComponent {
+  @Input('carro') carro: Carro = new Carro(0, '', null);
+  marcas?: Marca[];
+
   constructor(
     private carroService: CarroService,
     private marcaService: MarcaService,
-    private activatedRouter: ActivatedRoute,
-    private cdr: ChangeDetectorRef
-  ) {}
-
-  @Input('carro') carro: Carro = new Carro(0, '', null);
-  marcas: Marca[] = [];
-  @Input('marca') marcaSelecionada: Marca = new Marca(0, '', []);
-
-  ngOnInit(): void {
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.marcaService.findAll().subscribe({
       next: (marcas) => {
         this.marcas = marcas;
-        if (this.carro.marca) {
-          this.marcaSelecionada = this.marcas.find(
-            (m) => m.id === this.carro.marca.id
-          )!;
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        alert('Ocorreu um erro trazer a lista de marcas');
       },
     });
-
-    let id = this.activatedRouter.snapshot.params['id'];
+    let id = this.route.snapshot.params['id'];
     if (id > 0) {
       this.findById(id);
+    } else {
+      if (this.carro.id > 0) {
+        this.findById(id);
+      }
     }
   }
-
-  onSubmit(): void {
-    // Lógica para enviar o formulário
-    console.log(this.carro, this.marcaSelecionada);
-  }
-
   findById(id: number) {
     this.carroService.findById(id).subscribe({
-      next: (carro) => {
-        this.carro = carro;
-        console.log('Carro recebido:', carro);
-        this.marcaSelecionada = carro.marca;
-        this.marcaSelecionada = this.marcas.find(
-          (m) => m.id === carro.marca.id
-        )!;
-        this.cdr.detectChanges();
+      next: (value) => {
+        this.carro = value;
       },
       error: (err) => {
-        console.log(err);
+        console.log('Error no método findById: ' + err);
       },
     });
+  }
+
+  onSubmit() {
+    if (this.carro.id > 0) {
+      this.carroService.update(this.carro, this.carro.id).subscribe({
+        next: (carro) => {
+          console.log('Carro atualizado com sucesso: ' + carro.nome);
+          this.router.navigate(['admin/carros'], {
+            state: { carroEditado: this.carro },
+          });
+        },
+        error: (err) => {
+          console.log('Error ao atualizar carro: ' + err);
+        },
+      });
+    }
   }
 }

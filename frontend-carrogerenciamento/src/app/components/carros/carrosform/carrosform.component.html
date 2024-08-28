@@ -1,12 +1,12 @@
 <form (ngSubmit)="onSubmit()" #carForm="ngForm">
   <mat-form-field>
     <mat-label>Nome do Carro</mat-label>
-    <input matInput [(ngModel)]="carro.nome" name="nome" required />
+    <input matInput [(ngModel)]="carro.nome" [value]="carro.nome" name="nome" required />
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field *ngIf="carro.marca">
     <mat-label>Marca do Carro</mat-label>
-    <mat-select [(ngModel)]="marcaSelecionada.nome" name="marca" required>
+    <mat-select [(ngModel)]="carro.marca.nome" name="marca" required>
       <mat-option *ngFor="let marca of marcas" [value]="marca.nome">
         {{ marca.nome }}
       </mat-option>

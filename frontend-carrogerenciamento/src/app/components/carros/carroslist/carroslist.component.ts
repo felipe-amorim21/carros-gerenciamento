@@ -17,7 +17,16 @@ export class CarroslistComponent implements OnInit {
   // carroService = Inject(CarroService);
   displayedColumns: string[] = ['id', 'nome', 'marca', 'acessorio', 'acoes'];
 
-  constructor(private carroService: CarroService, private router: Router) {}
+  constructor(private carroService: CarroService, private router: Router) {
+    let carroEditado = history.state.carroEditado;
+
+    if (carroEditado != null) {
+      let index = this.carros.findIndex((carro) => {
+        return carro.id === carroEditado.id;
+      });
+      this.carros[index] = carroEditado;
+    }
+  }
 
   ngOnInit(): void {
     this.findAll();
