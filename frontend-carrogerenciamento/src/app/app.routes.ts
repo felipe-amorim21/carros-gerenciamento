@@ -12,6 +12,7 @@ export const routes: Routes = [
     children: [
       { path: 'carros', component: CarroslistComponent },
       { path: 'carros/edit/:id', component: CarrosformComponent },
+      { path: 'carros/edit', component: CarrosformComponent },
       { path: 'marcas', component: MarcaslistComponent },
     ],
   },

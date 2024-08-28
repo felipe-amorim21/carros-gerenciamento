@@ -19,6 +19,11 @@ export class CarroslistComponent implements OnInit {
 
   constructor(private carroService: CarroService, private router: Router) {
     let carroEditado = history.state.carroEditado;
+    let carroNovo = history.state.carroNovo;
+
+    if (carroNovo != null) {
+      this.carros.push(carroNovo);
+    }
 
     if (carroEditado != null) {
       let index = this.carros.findIndex((carro) => {
@@ -45,6 +50,10 @@ export class CarroslistComponent implements OnInit {
 
   editarCarro(carro: Carro) {
     this.router.navigate([`/admin/carros/edit/${carro.id}`]);
+  }
+
+  criarCarro() {
+    this.router.navigate(['admin/carros/edit']);
   }
 
   findAll() {

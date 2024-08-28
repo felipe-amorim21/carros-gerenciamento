@@ -1,5 +1,9 @@
 <div class="card">
-  <h3 class="card-title">Lista de Carros</h3>
+  <div class="card-header">
+    <h3 class="card-title">Lista de Carros</h3>
+    <button mat-flat-button class="btncelula create-button" (click)="criarCarro()">Novo carro</button>
+  </div>
+
   <table mat-table [dataSource]="carros" class="mat-elevation-z8 demo-table">
     <!-- Id Column -->
     <ng-container matColumnDef="id">

@@ -23,7 +23,7 @@ public class Carro {
     private long id;
 
     private String nome;
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = { CascadeType.DETACH, CascadeType.MERGE} )
     @JsonIgnoreProperties("carros")
     private Marca marca;
     @ManyToMany

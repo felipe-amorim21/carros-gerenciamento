@@ -32,39 +32,52 @@ import { state } from '@angular/animations';
   templateUrl: './carrosform.component.html',
   styleUrl: './carrosform.component.scss',
 })
-export class CarrosformComponent {
-  @Input('carro') carro: Carro = new Carro(0, '', null);
+export class CarrosformComponent implements OnInit {
+  carro: Carro = new Carro(0, '', new Marca(0, '', []));
   marcas?: Marca[];
+  selectedMarcaId?: number;
 
   constructor(
     private carroService: CarroService,
     private marcaService: MarcaService,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.marcaService.findAll().subscribe({
       next: (marcas) => {
         this.marcas = marcas;
+        this.loadCarro();
       },
     });
+  }
+
+  loadCarro() {
     let id = this.route.snapshot.params['id'];
     if (id > 0) {
       this.findById(id);
-    } else {
-      if (this.carro.id > 0) {
-        this.findById(id);
-      }
     }
   }
+
   findById(id: number) {
     this.carroService.findById(id).subscribe({
       next: (value) => {
         this.carro = value;
+        this.selectedMarcaId = this.carro.marca.id;
+        console.log('Carro encontrado:', this.carro);
       },
       error: (err) => {
         console.log('Error no método findById: ' + err);
       },
     });
+  }
+
+  onMarcaChange(id: number) {
+    const marcaSelecionada = this.marcas?.find((marca) => marca.id === id);
+    if (marcaSelecionada) {
+      this.carro.marca = marcaSelecionada;
+    }
   }
 
   onSubmit() {
@@ -78,6 +91,15 @@ export class CarrosformComponent {
         },
         error: (err) => {
           console.log('Error ao atualizar carro: ' + err);
+        },
+      });
+    } else {
+      this.carroService.save(this.carro).subscribe({
+        next: (carro) => {
+          console.log('Carro criado: ', carro);
+          this.router.navigate(['admin/carros'], {
+            state: { carroNovo: this.carro },
+          });
         },
       });
     }
